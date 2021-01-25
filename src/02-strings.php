@@ -28,12 +28,16 @@ function snakeCaseToCamelCase(string $input)
  */
 function mirrorMultibyteString(string $input)
 {
+    $res=[];
     $arr = explode(' ',$input);
-    for ($i=0;$i<count($arr);$i++){
-        $arr[$i]=implode('',array_reverse(mb_str_split($arr[$i],1)));
-
-    }
-    return implode(" ",$arr);
+    foreach ($arr as $elem){
+        $r = '';
+        for ($i = mb_strlen($elem); $i>=0; $i--) {
+            $r .= mb_substr($elem, $i, 1);
+        }
+        $res[]=$r;
+    }$str=implode(' ',$res);
+    return $str;
 }
 
 /**
