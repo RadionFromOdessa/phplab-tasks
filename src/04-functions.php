@@ -37,8 +37,12 @@ function sayHelloArgumentWrapper($arg)
 {
     // put your code here
 
-    return sayHelloArgument($arg);
-}
+    if(is_numeric($arg) or is_string($arg) or is_bool($arg)){
+        return sayHelloArgument($arg);
+    }else{
+        throw new InvalidArgumentException('InvalidArgumentException if $arg is not: number, string or bool');
+    }
+    }
 
 /**
  * Create a PhpUnit test (CountArgumentsTest) which will check that function below returns correct result
@@ -69,5 +73,15 @@ function countArguments()
  */
 function countArgumentsWrapper()
 {
-    // put your code here
+    $res = func_get_args();
+    foreach ($res as $key=>$values){
+        if(is_string($values)){
+            unset($res[$key]);
+        }
+    }
+    if(!empty($res)){
+        countArguments();
+    }else{
+        throw new InvalidArgumentException('It Is Not String');
+    }
 }
