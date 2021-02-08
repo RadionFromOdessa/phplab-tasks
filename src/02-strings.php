@@ -9,13 +9,20 @@
  */
 function snakeCaseToCamelCase(string $input)
 {
-    for ($i=0;$i<mb_strlen($input);$i++){
-        if($input[$i]=='_'){
-            $input[$i+1]=ucfirst($input[$i+1]);
+    $arr = str_split($input,1);
+
+    if(!function_exists('filterChars')){
+        function filterChars($ars){
+            if(in_array('_',$ars)!=false){
+                $search =   array_search('_',$ars);
+                $ars[$search+1]=ucfirst($ars[$search+1]);
+                unset($ars[$search]);
+                return filterChars($ars);
+            }
+            return $ars;
         }
-        $str=str_replace('_','',$input);
     }
-    return $str;
+    return implode(filterChars($arr));
 }
 
 /**
@@ -28,16 +35,12 @@ function snakeCaseToCamelCase(string $input)
  */
 function mirrorMultibyteString(string $input)
 {
-    $res=[];
-    $arr = explode(' ',$input);
-    foreach ($arr as $elem){
-        $r = '';
-        for ($i = mb_strlen($elem); $i>=0; $i--) {
-            $r .= mb_substr($elem, $i, 1);
-        }
-        $res[]=$r;
-    }$str=implode(' ',$res);
-    return $str;
+
+    preg_match_all('/./us', $input, $arк);
+
+    $str = join('', array_reverse($arк[0]));
+
+    return join(' ', array_reverse(mb_split(' ', $str)));
 }
 
 /**
