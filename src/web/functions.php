@@ -11,7 +11,12 @@
  */
 function getUniqueFirstLetters(array $airports)
 {
-    // put your logic here
+    $ars=[];
+    foreach($airports as $airport){
+        if(in_array($airport['name'][0],$ars)===false){
+            $ars[]=$airport['name'][0];
+        }
+    }
 
-    return ['A', 'B', 'C'];
+    return $ars;
 }
