@@ -9,20 +9,8 @@
  */
 function snakeCaseToCamelCase(string $input)
 {
-    $arr = str_split($input,1);
-
-    if(!function_exists('filterChars')){
-        function filterChars($ars){
-            if(in_array('_',$ars)!=false){
-                $search =   array_search('_',$ars);
-                $ars[$search+1]=ucfirst($ars[$search+1]);
-                unset($ars[$search]);
-                return filterChars($ars);
-            }
-            return $ars;
-        }
-    }
-    return implode(filterChars($arr));
+    $str = lcfirst(str_replace('_', '', ucwords($input, '_')));
+    return $str;
 }
 
 /**
