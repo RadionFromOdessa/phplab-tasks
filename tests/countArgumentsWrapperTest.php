@@ -2,8 +2,9 @@
 use PHPUnit\Framework\TestCase;
 
 class countArgumentsWrapperTest extends TestCase{
-    public function testcountArgumentsWrapper(){
+    public function testCountArgumentsExceptionIfNumber()
+    {
         $this->expectException(InvalidArgumentException::class);
-        countArgumentsWrapper('2','[]','33');
+        countArgumentsWrapper('4', 3);
     }
 }
