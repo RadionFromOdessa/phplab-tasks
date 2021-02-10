@@ -1,15 +1,13 @@
 <?php
+
 require_once './functions.php';
 
 $airports = require './airports.php';
-if(isset($_GET['page'])){
-    $page=$_GET['page'];
-}else{
-    $page=1;
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+} else {
+    $page = 1;
 }
-
-
-
 
 
 // Filtering
@@ -20,32 +18,29 @@ if(isset($_GET['page'])){
  */
 
 
-
-if(isset($_GET['filter_by_first_letter'])){
-
-    $CharsFilter=$_GET['filter_by_first_letter'];
-    $chrs="&filter_by_first_letter=$CharsFilter";
-    $CharFilter=[];
-    foreach ($airports as $airport){
-        if($airport['name'][0]==$CharsFilter){
-            $CharFilter[]=$airport;
+if (isset($_GET['filter_by_first_letter'])) {
+    $CharsFilter = $_GET['filter_by_first_letter'];
+    $chrs = "&filter_by_first_letter=$CharsFilter";
+    $CharFilter = [];
+    foreach ($airports as $airport) {
+        if ($airport['name'][0] == $CharsFilter) {
+            $CharFilter[] = $airport;
         }
     }
-    $airports=$CharFilter;
+    $airports = $CharFilter;
 }
 
-if(isset($_GET['filter_by_first_state'])){
-    $StatesFilter=$_GET['filter_by_first_state'];
-    $states="&filter_by_first_state=$StatesFilter";
-    $StateFilter=[];
-    foreach ($airports as $airport){
-        if($airport['state']==$StatesFilter){
-            $StateFilter[]=$airport;
+if (isset($_GET['filter_by_first_state'])) {
+    $StatesFilter = $_GET['filter_by_first_state'];
+    $states = "&filter_by_first_state=$StatesFilter";
+    $StateFilter = [];
+    foreach ($airports as $airport) {
+        if ($airport['state'] == $StatesFilter) {
+            $StateFilter[] = $airport;
         }
     }
-    $airports=$StateFilter;
+    $airports = $StateFilter;
 }
-
 
 
 // Sorting
@@ -54,13 +49,13 @@ if(isset($_GET['filter_by_first_state'])){
  * and apply sorting
  * (see Sorting task below)
  */
-if(isset($_GET['sort'])){
-    $currentSort=[];
-    $sortkey=$_GET['sort'];
-    foreach ($airports as $key=>$airport){
-        $currentSort[$key]=$airport[$sortkey];
+if (isset($_GET['sort'])) {
+    $currentSort = [];
+    $sortkey = $_GET['sort'];
+    foreach ($airports as $key => $airport) {
+        $currentSort[$key] = $airport[$sortkey];
     }
-    array_multisort($currentSort,SORT_ASC, $airports);
+    array_multisort($currentSort, SORT_ASC, $airports);
 }
 
 
@@ -72,13 +67,12 @@ if(isset($_GET['sort'])){
  */
 
 $numberpage = 5;
-$frompage = ($page - 1)*$numberpage;
+$frompage = ($page - 1) * $numberpage;
 $output = array_slice($airports, $frompage, $numberpage);
 $countarr = count($airports);
-$pageCount=ceil($countarr/$numberpage);
-$countShowPagesPag=2;
-$airports=$output;
-
+$pageCount = ceil($countarr / $numberpage);
+$countShowPagesPag = 2;
+$airports = $output;
 
 
 ?>
@@ -90,7 +84,8 @@ $airports=$output;
     <meta name="description" content="">
     <title>Airports</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
 <main role="main" class="container">
@@ -110,15 +105,17 @@ $airports=$output;
     <div class="alert alert-dark">
         Filter by first letter:
 
-        <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
+        <?php
+        foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
             <?php
-            $byLetter ="&filter_by_first_letter=$letter";
-            if(isset($_GET['filter_by_first_state'])){
-                $byLetter ="&filter_by_first_state=$StatesFilter&filter_by_first_letter=$letter";
-            }?>
+            $byLetter = "&filter_by_first_letter=$letter";
+            if (isset($_GET['filter_by_first_state'])) {
+                $byLetter = "&filter_by_first_state=$StatesFilter&filter_by_first_letter=$letter";
+            } ?>
 
-            <a href="?page=1<?=  $byLetter ?>"><?= $letter ?></a>
-        <?php endforeach; ?>
+            <a href="?page=1<?= $byLetter ?>"><?= $letter ?></a>
+        <?php
+        endforeach; ?>
 
         <a href="/" class="float-right">Reset all filters</a>
     </div>
@@ -138,17 +135,16 @@ $airports=$output;
         <thead>
         <tr>
             <?php
-
-            $sortingKey = array_keys($airports[0]) ;
-
-
+            $sortingKey = array_keys($airports[0]);
             ?>
-            <?php foreach ($sortingKey as $sortKet): ?>
+            <?php
+            foreach ($sortingKey as $sortKet): ?>
                 <?php
                 $sorting = "&sort=$sortKet";
                 ?>
-                <th scope="col"><a href="?page=<?= $page.$states.$chrs.$sorting ?>"><?= $sortKet ?></a></th>
-            <?php endforeach;   ?>
+                <th scope="col"><a href="?page=<?= $page . $states . $chrs . $sorting ?>"><?= $sortKet ?></a></th>
+            <?php
+            endforeach; ?>
 
         </tr>
         </thead>
@@ -163,15 +159,14 @@ $airports=$output;
              - when you apply filter_by_state, than filter_by_first_letter (see Filtering task #1) is not reset
                i.e. if you have filter_by_first_letter set you can additionally use filter_by_state
         -->
-        <?php foreach ($airports as $airport): ?>
+        <?php
+        foreach ($airports as $airport): ?>
 
             <?php
-            $byState ="&filter_by_first_state={$airport['state']}";
-            if(isset($_GET['filter_by_first_letter'])){
-                $byState ="&filter_by_first_letter=$CharsFilter&filter_by_first_state={$airport['state']}";
+            $byState = "&filter_by_first_state={$airport['state']}";
+            if (isset($_GET['filter_by_first_letter'])) {
+                $byState = "&filter_by_first_letter=$CharsFilter&filter_by_first_state={$airport['state']}";
             }
-
-
             ?>
 
             <tr>
@@ -182,7 +177,8 @@ $airports=$output;
                 <td><?= $airport['address'] ?></td>
                 <td><?= $airport['timezone'] ?></td>
             </tr>
-        <?php endforeach; ?>
+        <?php
+        endforeach; ?>
         </tbody>
     </table>
 
@@ -199,80 +195,94 @@ $airports=$output;
         <ul class="pagination justify-content-center">
 
             <?php
-            if($pageCount<10){
-                for($i=1;$i<=$pageCount;$i++){
-                    if($page==$i){
+            if ($pageCount < 10) {
+                for ($i = 1; $i <= $pageCount; $i++) {
+                    if ($page == $i) {
                         $class = " page-item active";
-                    }else{
+                    } else {
                         $class = " page-item";
-                    }?>
-                    <li class="<?= $class ?>"><a class="page-link" href="?page=<?= $i.$chrs.$states ?>"><?= $i ?></a></li>
+                    } ?>
+                    <li class="<?= $class ?>"><a class="page-link"
+                                                 href="?page=<?= $i . $chrs . $states ?>"><?= $i ?></a></li>
 
-                <?php }} else { ?>
+                    <?php
+                }
+            } else { ?>
 
                 <!-- Left side pagination 1/2/3/4/5 ... 81 -->
                 <?php
-                $prew=$page-1;
-                $next=$page+1;
+                $prew = $page - 1;
+                $next = $page + 1;
 
-                if($page<7){
-                    for($k=1;$k<8;$k++){
-                        if($page==$k){
-                            $class=" page-item active";
-                        }else{
-                            $class=" page-item";
-                        }?>
-                        <li class="<?= $class ?>"><a class="page-link" href="?page=<?=$k ?>"><?=$k ?></a></li>
+                if ($page < 10) {
+                    for ($k = 1; $k < 8; $k++) {
+                        if ($page == $k) {
+                            $class = " page-item active";
+                        } else {
+                            $class = " page-item";
+                        } ?>
+                        <li class="<?= $class ?>"><a class="page-link" href="?page=<?= $k ?>"><?= $k ?></a></li>
 
-                    <?php } ?>
-                    <li class="<?= $class ?>"><a class="page-link" href="?page=<?=$next ?>">>></a></li>
-                    <li class="<?= $class ?>"><a class="page-link" href="?page=<?=$pageCount ?>"><?=$pageCount?></a></li>
-                <?php } ?>
+                        <?php
+                    } ?>
+                    <li class="<?= $class ?>"><a class="page-link" href="?page=<?= $next ?>">>></a></li>
+                    <li class="<?= $class ?>"><a class="page-link" href="?page=<?= $pageCount ?>"><?= $pageCount ?></a>
+                    </li>
+                    <?php
+                } ?>
 
                 <!-- Center of pagination 1... 5/6/7 ... 81 -->
-                <?php if($page>6 && $page<$pageCount-5){  ?>
+                <?php
+                if ($page > 6 && $page < $pageCount - 5) { ?>
                     <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
                     <li class="<?= $class ?>"><a class="page-link" href="?page=<?= $prew ?>"><<</a></li>
 
 
-                    <?php for($i=($page-$countShowPagesPag);$i<=($page+$countShowPagesPag);$i++): ?>
+                    <?php
+                    for ($i = ($page - $countShowPagesPag); $i <= ($page + $countShowPagesPag); $i++): ?>
                         <?php
-                        if($page==$i){
+                        if ($page == $i) {
                             $class = " page-item active";
-                        }else{
+                        } else {
                             $class = " page-item";
                         }
                         ?>
                         <li class="<?= $class ?>"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
-                    <?php endfor; ?>
+                    <?php
+                    endfor; ?>
 
 
-                    <li class="<?= $class ?>"><a class="page-link" href="?page=<?=$next ?>">>></a></li>
+                    <li class="<?= $class ?>"><a class="page-link" href="?page=<?= $next ?>">>></a></li>
                     <li class="page-item"><a class="page-link" href="?page=<?= $pageCount ?>"><?= $pageCount ?></a></li>
-                <?php } ?>
+                    <?php
+                } ?>
 
 
                 <!-- Right side  pagination 1... 77/78/79/80/81 -->
-                <?php if($page>($pageCount-6)){ ?>
+                <?php
+                if ($page > ($pageCount - 6)) { ?>
                     <li class="<?= $class ?>"><a class="page-link" href="?page=1">1</a></li>
                     <li class="<?= $class ?>"><a class="page-link" href="?page=<?= $prew ?>"><<</a></li>
                     <?php
 
-                    for($k=$pageCount;$k>($pageCount-7);$k--){
-                        $arr[]=$k;
-
-                    }$arr=array_reverse($arr);
-                    foreach ($arr as $value){
-                        if($page==$value){
-                            $class=" page-item active";
-                        }else{
-                            $class=" page-item";
+                    for ($k = $pageCount; $k > ($pageCount - 7); $k--) {
+                        $arr[] = $k;
+                    }
+                    $arr = array_reverse($arr);
+                    foreach ($arr as $value) {
+                        if ($page == $value) {
+                            $class = " page-item active";
+                        } else {
+                            $class = " page-item";
                         }
                         ?>
                         <li class="<?= $class ?>"><a class="page-link" href="?page=<?= $value ?>"><?= $value ?></a></li>
-                    <?php }} ?>
+                        <?php
+                    }
+                } ?>
 
-            <?php } ?>
+                <?php
+            } ?>
 
         </ul>
     </nav>
