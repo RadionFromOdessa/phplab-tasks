@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Create a PhpUnit test (SayHelloTest) which will check that function below returns a correct result
  * i.e. returns 'Hello'
@@ -37,11 +38,11 @@ function sayHelloArgumentWrapper($arg)
 {
     // put your code here
 
-    if(!is_numeric($arg) or !is_string($arg) or !is_bool($arg)){
+    if (!is_numeric($arg) && !is_string($arg) && !is_bool($arg)) {
         throw new InvalidArgumentException('InvalidArgumentException if $arg is not: number, string or bool');
     }
     return sayHelloArgument($arg);
-    }
+}
 
 /**
  * Create a PhpUnit test (CountArgumentsTest) which will check that function below returns correct result
@@ -52,7 +53,7 @@ function sayHelloArgumentWrapper($arg)
 function countArguments()
 {
     return [
-        'argument_count'  => func_num_args(),
+        'argument_count' => func_num_args(),
         'argument_values' => func_get_args(),
     ];
 }
@@ -73,8 +74,8 @@ function countArguments()
 function countArgumentsWrapper()
 {
     $res = func_get_args();
-    foreach ($res as $values){
-        if(!is_string($values)){
+    foreach ($res as $values) {
+        if (!is_string($values)) {
             throw new InvalidArgumentException('It is not string');
         }
     }

@@ -15,7 +15,7 @@ class countArgumentsTest extends TestCase{
         return [
             [[], ['argument_count' => 0, 'argument_values' => [],]],
             [['str1'], ['argument_count' => 1, 'argument_values' => ['str1'],]],
-            [['str1', 'str2'], ['argument_count' => 2, 'argument_values' => ['str1','str2'],]],
+            [['str1', 'str2'], ['argument_count' => 2, 'argument_values' => ['str1', 'str2'],]],
         ];
     }
 
