@@ -135,6 +135,7 @@ $airports = $output;
         <thead>
         <tr>
             <?php
+
             $sortingKey = array_keys($airports[0]);
             ?>
             <?php
@@ -214,7 +215,7 @@ $airports = $output;
                 $prew = $page - 1;
                 $next = $page + 1;
 
-                if ($page < 10) {
+                if ($page < 7) {
                     for ($k = 1; $k < 8; $k++) {
                         if ($page == $k) {
                             $class = " page-item active";
