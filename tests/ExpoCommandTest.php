@@ -1,12 +1,12 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use src\oop\Commands\SumCommand;
+use src\oop\Commands\ExpoCommand;
 
 class ExpoCommandTest extends TestCase
 {
     /**
-     * @var SumCommand
+     * @var ExpoCommand
      */
     private $command;
 
@@ -17,7 +17,7 @@ class ExpoCommandTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->command = new SumCommand();
+        $this->command = new ExpoCommand();
     }
 
     /**

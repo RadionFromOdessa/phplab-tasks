@@ -1,12 +1,12 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use src\oop\Commands\SumCommand;
+use src\oop\Commands\DivCommand;
 
 class DivCommandTest extends TestCase
 {
     /**
-     * @var SumCommand
+     * @var DivCommand
      */
     private $command;
 
@@ -17,7 +17,7 @@ class DivCommandTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->command = new SumCommand();
+        $this->command = new DivCommand();
     }
 
     /**

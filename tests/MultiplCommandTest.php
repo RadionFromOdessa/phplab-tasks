@@ -1,13 +1,13 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use src\oop\Commands\SumCommand;
+use src\oop\Commands\MultiplCommand;
 
 class MultiplCommandTest extends TestCase
 {
 
     /**
-     * @var SumCommand
+     * @var MultiplCommand
      */
     private $command;
 
@@ -18,7 +18,7 @@ class MultiplCommandTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->command = new SumCommand();
+        $this->command = new MultiplCommand();
     }
 
     /**
